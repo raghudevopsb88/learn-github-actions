@@ -1,3 +1,3 @@
 # learn-github-actions
 
-GitHub Actions
+GitHub Actions Features
