@@ -1,0 +1,38 @@
+name: Reusable Test1
+on:
+  workflow_call:
+
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: echo "Building ${{ inputs.app_type }} application"
+
+
+  test:
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Run Tests
+        run: echo "Testing ${{ inputs.app_type }} application"
+
+
+  dev-deploy:
+    runs-on: self-hosted
+    needs: test
+    environment: dev
+    steps:
+      - name: Deploy to Dev
+        run: echo "Deploying to dev"
+
+
+  qa-deploy:
+    runs-on: self-hosted
+    needs: dev-deploy
+    environment: qa
+    steps:
+      - name: Deploy to QA
+        run: echo "Deploying to QA"
