@@ -1,0 +1,12 @@
+name: ReuseTest1
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  call-cicd:
+    uses: raghudevopsb88/learn-github-actions/.github/workflows/reuse1.yml@main
+
+
