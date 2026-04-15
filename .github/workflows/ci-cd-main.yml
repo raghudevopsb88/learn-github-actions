@@ -1,0 +1,59 @@
+name: CI/CD - Main
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: echo "Building application..."
+
+
+  test:
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Run Tests
+        run: echo "Running tests..."
+
+
+  dev-deploy:
+    runs-on: self-hosted
+    needs: test
+    environment: dev
+    steps:
+      - name: Deploy to Dev
+        run: echo "Deploying to dev..."
+
+
+  qa-deploy:
+    runs-on: self-hosted
+    needs: dev-deploy
+    environment: qa
+    steps:
+      - name: Deploy to QA
+        run: echo "Deploying to QA..."
+
+
+  uat-deploy:
+    runs-on: self-hosted
+    needs: qa-deploy
+    environment: uat
+    steps:
+      - name: Deploy to UAT
+        run: echo "Deploying to UAT..."
+
+
+  prod-deploy:
+    runs-on: self-hosted
+    needs: uat-deploy
+    environment: prod
+    steps:
+      - name: Deploy to Production
+        run: echo "Deploying to production..."
